@@ -1,5 +1,6 @@
 #include "Arduino.h"
 #include "Authentication_Library.h"
+#include <Adafruit_PN532.h>             // For use with a PN532 to interact with RFID cards
 
 KeyDatabase::KeyDatabase()
 {
@@ -9,13 +10,13 @@ KeyDatabase::~KeyDatabase()
 {
 }
 
-bool KeyDatabase::Contains(String key)
+bool KeyDatabase::Admin(String key)
 {
 	// Yes, we are brute forcing this despite the fact that we should sort the array if it's all predefined
 	//and despite that scene in silicon valley where Richard was mocked mercilessly for brute forcing a sorted list in his early days at hooli.
-	for (int i = 0; i < numKeys; i++)
+	for (int i = 0; i < numAdminKeys; i++)
 	{
-		if (validKeys[i] == key)
+		if (validAdminKeys[i] == key)
 		{
 			return true;
 		}
@@ -23,10 +24,24 @@ bool KeyDatabase::Contains(String key)
 	return false;
 }
 
-int KeyDatabase::GetNumberOfKeys()
+bool KeyDatabase::Initialization(String key)
 {
-	return numKeys;
+  // Yes, we are brute forcing this despite the fact that we should sort the array if it's all predefined
+  //and despite that scene in silicon valley where Richard was mocked mercilessly for brute forcing a sorted list in his early days at hooli.
+  for (int i = 0; i < numOneTimeKeys; i++)
+  {
+    if (validOneTimeKeys[i] == key)
+    {
+      return true;
+    }
+  }
+  return false;
 }
+
+//int KeyDatabase::GetNumberOfKeys()
+//{
+//	return numKeys;
+//}
 
 String KeyDatabase::GeneratePsuedoRandomKey()
 {

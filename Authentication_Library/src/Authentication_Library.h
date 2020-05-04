@@ -12,18 +12,39 @@ class KeyDatabase
 	// We then can have 68 random keys and expect that it will take about a year for any one of them to be guessed in a brute force.
 	// This should be sufficient for our purposes as this is a temporary solution and the means of attack for this product
 	// would likely be social engineering or theft to get a valid code or opening the box to splice wiring.
-	private:
-		int numKeys = 3;
-		String validKeys[3] = {
-			"A9873D79", // Company A
-			"B9873D79", // Company B
-			"B987", // Company C
-		};
+//	private:
+//		int numAdminKeys = 2;
+//		String validAdminKeys[2] = {
+//			"5338B995", // Company A
+//			"B9873D79", // Company B
+//		};
+//    int numOneTimeKeys = 2;
+//    String validOneTimeKeys[2] = {
+//      "2C6C6C01", // Company A
+//      "1DDDB85A", // Company B
+//    };
+//    uint8_t initializationPageOne = 4;
+//    uint8_t initializationPageTwo = 5;  
+
 	
 	public:
 		KeyDatabase();
 		~KeyDatabase();
-		bool Contains(String key);
-		int GetNumberOfKeys();
+		bool Admin(String key);
+    bool Initialization(String key);
+		//int GetNumberOfKeys();
 		String GeneratePsuedoRandomKey();
+      int numAdminKeys = 2;
+    String validAdminKeys[2] = {
+      "5338B995", // Company A
+      "B9873D79", // Company B
+    };
+    int numOneTimeKeys = 2;
+    String validOneTimeKeys[2] = {
+      "2C6C6C01", // Company A
+      "1DDDB85A", // Company B
+    };
+    String replacementKey = "0CDA20EB";
+    uint8_t initializationPageOne = 4;
+    uint8_t initializationPageTwo = 5;  
 };
